@@ -11,10 +11,10 @@
     tools:targetApi="m">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageViewMoviePoster"
         android:layout_width="106dp"
         android:layout_height="160dp"
         android:scaleType="centerCrop"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@drawable/image_bg" />
 
 </LinearLayout>

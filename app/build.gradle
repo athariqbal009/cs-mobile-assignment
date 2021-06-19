@@ -51,6 +51,9 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
 
+    // Image library
+    implementation "io.coil-kt:coil:$coilVersion"
+
     testImplementation "junit:junit:$junitVersion"
     androidTestImplementation "androidx.test.ext:junit:$junitextVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"

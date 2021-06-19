@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.home.HomeActivity">
 
     <LinearLayout
@@ -38,7 +39,10 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewMovieListHorizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            tools:listitem="@layout/recycler_view_movie_list_horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
         <TextView
             android:id="@+id/textView2"
@@ -49,6 +53,9 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewMovieListVertical"
+            android:orientation="vertical"
+            tools:listitem="@layout/recycler_view_movie_list_vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>

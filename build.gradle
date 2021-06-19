@@ -49,5 +49,7 @@ ext {
 
     activityKtxVersion = "1.2.3"
 
+    coilVersion = "1.2.2"
+
     espressoVersion = "3.3.0"
 }

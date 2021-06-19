@@ -1,4 +1,7 @@
 package com.backbase.assignment.moviedb
 
-class MovieDB {
+import android.app.Application
+
+class MovieDB: Application() {
+
 }
