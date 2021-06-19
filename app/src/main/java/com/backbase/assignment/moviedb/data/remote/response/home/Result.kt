@@ -1,4 +1,4 @@
-package com.backbase.assignment.moviedb.data.remote.response
+package com.backbase.assignment.moviedb.data.remote.response.home
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

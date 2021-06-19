@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.MovieDB" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.MovieDB" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/black_overlay</item>
         <item name="colorPrimaryVariant">@color/grey</item>
@@ -16,7 +16,7 @@
         <item name="android:textColor">@color/grey</item>
         <item name="actionBarTextColor">@color/actionBarColor</item>
     </style>
-    
+
     <style name="Theme.MovieDB.NoActionBar" parent="Theme.MovieDB">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -53,6 +53,15 @@
         <item name="android:fontFamily">sans-serif-thin</item>
         <item name="android:textColor">@color/light_grey</item>
         <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="Theme.MovieDB.Transparent" parent="Theme.MaterialComponents">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
     </style>
 
 </resources>

@@ -1,9 +1,9 @@
-package com.backbase.assignment.moviedb.data.remote.response
+package com.backbase.assignment.moviedb.data.remote.response.home
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class MovieListModel {
+class MovieList {
     @SerializedName("dates")
     @Expose
     var dates: Dates? = null

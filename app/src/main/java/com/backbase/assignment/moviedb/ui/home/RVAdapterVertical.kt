@@ -3,36 +3,58 @@ package com.backbase.assignment.moviedb.ui.home
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.backbase.assignment.moviedb.R
+import com.backbase.assignment.moviedb.R.drawable
 import com.backbase.assignment.moviedb.data.remote.ApiParams
-import com.backbase.assignment.moviedb.data.remote.response.MovieListModel
-import com.backbase.assignment.moviedb.data.remote.response.Result
+import com.backbase.assignment.moviedb.data.remote.response.home.Result
 import com.backbase.assignment.moviedb.utils.Utils
 import com.backbase.assignment.moviedb.utils.inflate
 
-class RVAdapterVertical(private val movieListModel: MovieListModel): RecyclerView.Adapter<RVAdapterVertical.MovieHolder>() {
+class RVAdapterVertical(
+    private val movieList: List<Result>,
+    private val onClick: (Result) -> Unit
+) : RecyclerView.Adapter<RVAdapterVertical.MovieHolder>() {
+    init {
+        setHasStableIds(true)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieHolder {
-        return MovieHolder(parent.inflate(R.layout.recycler_view_movie_list_vertical,false))
+        return MovieHolder(
+            parent.inflate(R.layout.recycler_view_movie_list_vertical, false),
+            onClick
+        )
     }
 
     override fun onBindViewHolder(holder: MovieHolder, position: Int) {
-        movieListModel.results?.get(position)?.let { holder.bindMovie(it) }
+        val item = movieList[position]
+        holder.setIsRecyclable(false)
+        movieList[position].let {
+            holder.bindMovie(item)
+            holder.itemView.setOnClickListener {
+                onClick(item)
+            }
+        }
     }
 
     override fun getItemCount(): Int {
-        return movieListModel.results?.size!!
+        return movieList.size
     }
 
-    class MovieHolder(itemView: View): RecyclerView.ViewHolder(itemView), View.OnClickListener {
-        init {
-            //itemView.setOnClickListener(this)
-        }
-        override fun onClick(v: View?) {
-            TODO("Not yet implemented")
-        }
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
+    class MovieHolder(itemView: View, val onClick: (Result) -> Unit) :
+        RecyclerView.ViewHolder(itemView) {
 
         fun bindMovie(results: Result) {
             val poster = itemView.findViewById(R.id.imageViewMoviePoster) as ImageView
@@ -43,6 +65,33 @@ class RVAdapterVertical(private val movieListModel: MovieListModel): RecyclerVie
             poster.load(ApiParams.URL_POSTER + results.posterPath)
             title.text = results.title
             date.text = results.releaseDate?.let { Utils.convertDate(it) }
+            setupProgress(results)
+        }
+
+        private fun setupProgress(results: Result) {
+            val progress = itemView.findViewById(R.id.progressBar) as ProgressBar
+            val progressText = itemView.findViewById(R.id.textViewProgress) as TextView
+
+            if (Utils.convertRating(results.voteAverage) >= 51) {
+                progress.progressDrawable =
+                    ResourcesCompat.getDrawable(itemView.resources, drawable.progress_green, null)
+                progress.background = ResourcesCompat.getDrawable(
+                    itemView.resources,
+                    drawable.progress_circle_green,
+                    null
+                )
+            } else {
+                progress.progressDrawable =
+                    ResourcesCompat.getDrawable(itemView.resources, drawable.progress_yellow, null)
+                progress.background = ResourcesCompat.getDrawable(
+                    itemView.resources,
+                    drawable.progress_circle_yellow,
+                    null
+                )
+            }
+
+            progress.progress = Utils.convertRating(results.voteAverage)
+            progressText.text = Utils.convertRating(results.voteAverage).toString().plus("%")
         }
     }
 }

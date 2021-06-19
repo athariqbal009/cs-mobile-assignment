@@ -1,54 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/black_overlay"
     android:clickable="true"
     android:focusable="true"
-    android:background="@color/black_overlay"
     android:foreground="?selectableItemBackgroundBorderless"
-    android:orientation="horizontal"
     tools:ignore="UnusedAttribute"
     tools:targetApi="m">
 
     <ImageView
-        android:layout_marginLeft="@dimen/dimen_20"
-        android:layout_marginTop="@dimen/dimen_10"
-        android:layout_marginBottom="@dimen/dimen_10"
         android:id="@+id/imageViewMoviePoster"
         android:layout_width="47dp"
         android:layout_height="71dp"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:layout_marginBottom="@dimen/dimen_10"
         android:scaleType="centerCrop"
-        android:src="@drawable/image_bg" />
+        android:src="@drawable/image_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/linearLayout"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:layout_marginLeft="@dimen/dimen_20"
-        android:orientation="vertical"
-        android:layout_marginRight="@dimen/dimen_20"
-        android:layout_width="match_parent"
+        android:id="@+id/linearLayout"
+        android:layout_width="220dp"
+        android:layout_height="match_parent"
         android:gravity="center_vertical"
-        android:layout_height="match_parent">
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/imageViewMoviePoster"
+        app:layout_constraintRight_toLeftOf="@+id/relativeLayout"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            style="@style/Theme.MovieDB.TextStyleTitle"
             android:id="@+id/textViewTitle"
-            android:text="Avengers: Endgame"
+            style="@style/Theme.MovieDB.TextStyleTitle"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="Avengers: Endgame" />
 
         <TextView
-            style="@style/Theme.MovieDB.TextStyleTitleSecondary"
-            android:text="April 26, 2019"
             android:id="@+id/textViewDate"
+            style="@style/Theme.MovieDB.TextStyleTitleSecondary"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="April 26, 2019" />
 
         <TextView
-            style="@style/Theme.MovieDB.TextStyleTitleSecondary"
-            android:text="3h 1m"
             android:id="@+id/textViewTime"
+            style="@style/Theme.MovieDB.TextStyleTitleSecondary"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="3h 1m" />
     </LinearLayout>
 
-</LinearLayout>
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/linearLayout"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_vertical"
+            android:indeterminate="false"
+            android:max="100"
+            android:progress="0"
+            android:secondaryProgress="0" />
+
+        <TextView
+            android:id="@+id/textViewProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:layout_alignBottom="@+id/progressBar"
+            android:layout_centerInParent="true"
+            android:text="50%"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

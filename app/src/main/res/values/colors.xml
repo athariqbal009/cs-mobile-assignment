@@ -14,5 +14,11 @@
     <color name="black_overlay">#66212121</color>
     <color name="grey">#66AAAAAA</color>
     <color name="light_grey">#FFCDCDCD</color>
-    <color name="actionBarColor">#fcd052</color>
+    <color name="actionBarColor">#FFFCD052</color>
+
+    <!--Progress bar colors-->
+    <color name="green">#1EC976</color>
+    <color name="light_green">#1E4227</color>
+    <color name="yellow">#C5CA2F</color>
+    <color name="light_yellow">#393911</color>
 </resources>
