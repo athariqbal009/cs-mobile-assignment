@@ -14,6 +14,7 @@ import com.backbase.assignment.moviebox.data.remote.ApiParams
 import com.backbase.assignment.moviebox.data.remote.response.home.Result
 import com.backbase.assignment.moviebox.utils.Utils
 import com.backbase.assignment.moviebox.utils.inflate
+import com.bumptech.glide.Glide
 
 class RVAdapterVertical(
     private val movieList: List<Result>,
@@ -62,6 +63,7 @@ class RVAdapterVertical(
             val date = itemView.findViewById(R.id.textViewDate) as TextView
             val time = itemView.findViewById(R.id.textViewTime) as TextView
 
+            //Glide.with(itemView).load(ApiParams.URL_POSTER + results.posterPath).into(poster)
             poster.load(ApiParams.URL_POSTER + results.posterPath)
             title.text = results.title
             date.text = results.releaseDate?.let { Utils.convertDate(it) }

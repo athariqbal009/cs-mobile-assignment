@@ -53,6 +53,7 @@ dependencies {
 
     // Image library
     implementation "io.coil-kt:coil:$coilVersion"
+    implementation "com.github.bumptech.glide:glide:$glideVersion"
 
     testImplementation "junit:junit:$junitVersion"
     androidTestImplementation "androidx.test.ext:junit:$junitextVersion"

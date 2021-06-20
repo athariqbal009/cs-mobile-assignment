@@ -10,6 +10,7 @@ import com.backbase.assignment.moviebox.data.remote.ApiParams
 import com.backbase.assignment.moviebox.data.remote.response.home.MovieList
 import com.backbase.assignment.moviebox.data.remote.response.home.Result
 import com.backbase.assignment.moviebox.utils.inflate
+import com.bumptech.glide.Glide
 
 class RVAdapterHorizontal(private val movieList: MovieList): RecyclerView.Adapter<RVAdapterHorizontal.MovieHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieHolder {
@@ -34,6 +35,7 @@ class RVAdapterHorizontal(private val movieList: MovieList): RecyclerView.Adapte
 
        fun bindMovie(results: Result) {
            val poster = itemView.findViewById(R.id.imageViewMoviePoster) as ImageView
+           //Glide.with(itemView).load(ApiParams.URL_POSTER + results.posterPath).into(poster)
            poster.load(ApiParams.URL_POSTER + results.posterPath)
         }
     }

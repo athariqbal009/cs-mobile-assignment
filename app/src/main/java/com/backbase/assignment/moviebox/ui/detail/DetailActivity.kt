@@ -11,6 +11,7 @@ import com.backbase.assignment.moviebox.data.remote.response.detail.Genre
 import com.backbase.assignment.moviebox.databinding.ActivityDetailBinding
 import com.backbase.assignment.moviebox.ui.ViewModelFactory
 import com.backbase.assignment.moviebox.utils.Utils
+import com.bumptech.glide.Glide
 import com.google.android.material.chip.Chip
 
 private const val TAG: String = "DetailActivity"
@@ -39,6 +40,7 @@ class DetailActivity : AppCompatActivity() {
         viewModel.getMovieDetails().observe(this, {
             binding.textView3.visibility = View.VISIBLE
             Log.v(TAG, it.title.toString())
+            //Glide.with(this).load(ApiParams.URL_POSTER + it.posterPath).into(binding.imageViewPoster)
             binding.imageViewPoster.load(ApiParams.URL_POSTER + it.posterPath)
             binding.textViewTitle.text = it.title
             binding.textViewDateTime.text = Utils.convertDate(it.releaseDate.toString())
