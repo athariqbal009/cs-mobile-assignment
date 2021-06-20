@@ -39,6 +39,8 @@
             android:id="@+id/textViewTitle"
             style="@style/Theme.MovieDB.TextStyleTitle"
             android:layout_width="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:layout_height="wrap_content"
             android:text="Avengers: Endgame" />
 

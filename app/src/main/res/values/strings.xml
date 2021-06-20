@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MovieDB</string>
+    <string name="app_name">MovieBox</string>
     <string name="string_playing_now">Playing Now</string>
     <string name="string_most_popular">Most Popular</string>
     <string name="string_overview">OverView</string>

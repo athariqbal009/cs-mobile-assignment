@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.backbase.assignment.moviedb">
+    package="com.backbase.assignment.moviebox">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
-        android:name=".MovieDB"
+        android:name="com.backbase.assignment.moviebox.MovieBox"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_movie_box"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_movie_box_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieDB">
         <activity
-            android:name=".ui.splash.SplashScreenActivity"
+            android:name="com.backbase.assignment.moviebox.ui.splash.SplashScreenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.MovieDB.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,10 +26,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.home.HomeActivity"
+            android:name="com.backbase.assignment.moviebox.ui.home.HomeActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.MovieDB.NoActionBar" />
         <activity
-            android:name=".ui.detail.DetailActivity"
+            android:name="com.backbase.assignment.moviebox.ui.detail.DetailActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.MovieDB.NoActionBar" />
     </application>
 
