@@ -25,10 +25,11 @@ class Utils {
 
         @JvmStatic
         fun convertDate(date: String): String {
+            val pattern = "MMMM dd, yyyy"
             return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                LocalDate.parse(date).format(DateTimeFormatter.ofPattern("MMMM dd, yyyy")).toString()
+                LocalDate.parse(date).format(DateTimeFormatter.ofPattern(pattern)).toString()
             } else {
-                SimpleDateFormat("MMMM dd, yyyy").format(SimpleDateFormat("yyyy-MM-dd").parse(date))
+                SimpleDateFormat(pattern).format(SimpleDateFormat("yyyy-MM-dd").parse(date))
                     .toString()
             }
         }
