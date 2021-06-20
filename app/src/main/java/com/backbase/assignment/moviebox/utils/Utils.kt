@@ -26,7 +26,7 @@ class Utils {
         @JvmStatic
         fun convertDate(date: String): String {
             return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                LocalDate.parse(date, DateTimeFormatter.ofPattern("MMMM dd, yyyy")).toString()
+                LocalDate.parse(date).format(DateTimeFormatter.ofPattern("MMMM dd, yyyy")).toString()
             } else {
                 SimpleDateFormat("MMMM dd, yyyy").format(SimpleDateFormat("yyyy-MM-dd").parse(date))
                     .toString()
