@@ -4,7 +4,7 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "com.backbase.assignment.moviedb",
+  "applicationId": "com.backbase.assignment.moviebox",
   "variantName": "release",
   "elements": [
     {
