@@ -5,6 +5,10 @@ _**Try latest apk 👇**_
 
 [![MovieBox](https://img.shields.io/badge/MovieBox-APK-black.svg?style=for-the-badge&logo=android)](https://gitlab.com/athariqbal009/cs-mobile-assignment/uploads/c6f2492e7aa96d16b629ec4d17e57a4e/app-release.apk)
 
+SplashScreen | HomeScreen | DetailScreen
+--- | --- | --- |
+![](https://gitlab.com/athariqbal009/cs-mobile-assignment/uploads/ab51ee44e082359e0753f93e92ec6624/Screenshot_2021-06-22-11-52-01-83_a35e1787587fb8fa24c2e255ba40229b_1_.jpg) | ![](https://gitlab.com/athariqbal009/cs-mobile-assignment/uploads/ca36c4c6b2e23f8b329ed906d461bd3e/Screenshot_2021-06-22-11-52-09-18_a35e1787587fb8fa24c2e255ba40229b_1_.jpg) | ![](https://gitlab.com/athariqbal009/cs-mobile-assignment/uploads/d92b1f321e4fd488503d5fab9cc8ba4b/Screenshot_2021-06-22-11-52-14-40_a35e1787587fb8fa24c2e255ba40229b_1_.jpg)
+
 ## App Overview & Functionalities
 MovieBox consist of three activities.
 1. SplashScreen: This is the launcher activity. When the app lauch it will show the app name. This screen only show the app name. holding the activity for ~3ms move to the HomeScreen activity. for this delay here using the Handler class.
