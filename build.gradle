@@ -28,7 +28,7 @@ task clean(type: Delete) {
 }
 
 ext {
-    applicationId = "com.backbase.assignment.moviedb"
+    applicationId = "com.backbase.assignment.moviebox"
     compileSdkVersion = 30
     buildToolsVersion = "30.0.3"
     minSdkVersion = 21
@@ -46,6 +46,8 @@ ext {
 
     junitVersion = "4.13.2"
     junitextVersion = "1.1.2"
+
+    truthVersion = "1.1.2"
 
     activityKtxVersion = "1.2.3"
 

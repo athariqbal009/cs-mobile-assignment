@@ -63,4 +63,13 @@
         <item name="windowNoTitle">true</item>
         <item name="android:backgroundDimEnabled">false</item>
     </style>
+
+    <style name="Theme.MovieDB.TextStyleProgressTitle" parent="Theme.MovieDB">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textColor">@color/light_grey</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

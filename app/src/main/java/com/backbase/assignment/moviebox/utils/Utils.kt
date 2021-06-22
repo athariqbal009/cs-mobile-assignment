@@ -7,6 +7,7 @@ import android.os.Build
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.util.*
 import kotlin.math.roundToInt
 
 class Utils {
@@ -26,14 +27,22 @@ class Utils {
         @JvmStatic
         fun convertDate(date: String): String {
             val pattern = "MMMM dd, yyyy"
-            return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                LocalDate.parse(date).format(DateTimeFormatter.ofPattern(pattern)).toString()
-            } else {
-                SimpleDateFormat(pattern).format(SimpleDateFormat("yyyy-MM-dd").parse(date))
-                    .toString()
+            val msg = "Date is not available"
+            return try {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && date.isNotEmpty()) {
+                    LocalDate.parse(date).format(DateTimeFormatter.ofPattern(pattern)).toString()
+                } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O && date.isNotEmpty()) {
+                    SimpleDateFormat(pattern).format(SimpleDateFormat("yyyy-MM-dd").parse(date))
+                        .toString()
+                } else {
+                    msg
+                }
+            } catch (e: Exception) {
+                msg
             }
         }
 
+        @JvmStatic
         fun convertRating(rating: Float?): Int {
                 return rating!!.times(10).roundToInt()
         }

@@ -84,9 +84,9 @@
             android:id="@+id/textViewProgress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
             android:layout_alignBottom="@+id/progressBar"
             android:layout_centerInParent="true"
+            style="@style/Theme.MovieDB.TextStyleProgressTitle"
             android:text="50%"
             android:textAppearance="?android:attr/textAppearanceSmall" />
     </RelativeLayout>
