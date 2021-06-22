@@ -3,7 +3,7 @@ MovieBox listed latested and polular movies. Consuming the `API` from `TMDB`. It
 
 _**Try latest apk 👇**_
 
-[![MovieBox](https://img.shields.io/badge/MovieBox-APK-black.svg?style=for-the-badge&logo=android)](https://gitlab.com/athariqbal009/cs-mobile-assignment/uploads/c6f2492e7aa96d16b629ec4d17e57a4e/app-release.apk)
+[![MovieBox](https://img.shields.io/badge/MovieBox-APK-black.svg?style=for-the-badge&logo=android)](https://gitlab.com/athariqbal009/cs-mobile-assignment/uploads/d5a91ab552b089721a6ef50cf8ebd930/app-release.apk)
 
 SplashScreen | HomeScreen | DetailScreen
 --- | --- | --- |
