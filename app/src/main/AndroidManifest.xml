@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
-        android:name="com.backbase.assignment.moviebox.MovieBox"
+        android:name=".MovieBox"
         android:allowBackup="true"
         android:icon="@mipmap/ic_movie_box"
         android:label="@string/app_name"

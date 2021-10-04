@@ -1,87 +1,65 @@
 package com.backbase.assignment.moviebox.ui.home
 
-import android.content.Context
+import android.app.Application
 import android.util.Log
-import androidx.lifecycle.*
-import com.backbase.assignment.moviebox.data.remote.ApiAdapter
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.backbase.assignment.moviebox.data.remote.response.home.MovieList
+import com.backbase.assignment.moviebox.domain.MovieRepository
+import com.backbase.assignment.moviebox.utils.Resource
 import com.backbase.assignment.moviebox.utils.Utils
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 private const val TAG: String = "HomeViewModel"
 
-class HomeViewModel(private val context: Context) : ViewModel() {
-    private val movieListHorizontal: MutableLiveData<MovieList> by lazy {
-        MutableLiveData<MovieList>().also {
+class HomeViewModel(
+    private val app: Application,
+    private val movieRepository: MovieRepository,
+    private val ioDispatcher: CoroutineDispatcher
+) : ViewModel() {
+    val movieListHorizontal: MutableLiveData<Resource<MovieList>> by lazy {
+        MutableLiveData<Resource<MovieList>>().also {
             loadMovieListHorizontally()
         }
     }
 
-    private val movieListVertical: MutableLiveData<MovieList> by lazy {
-        MutableLiveData<MovieList>().also {
+    val movieListVertical: MutableLiveData<Resource<MovieList>> by lazy {
+        MutableLiveData<Resource<MovieList>>().also {
             loadMovieListVertically()
         }
     }
 
-    fun getMovieListHorizontal(): LiveData<MovieList> {
-        return movieListHorizontal
-    }
-
-    fun getMovieListVertical(): LiveData<MovieList> {
-        return movieListVertical
-    }
-
-    private fun loadMovieListHorizontally() {
-        if (Utils.isConnected(context)) {
-            val callback = object : Callback<MovieList> {
-                override fun onResponse(
-                    call: Call<MovieList>,
-                    response: Response<MovieList>
-                ) {
-                    response.isSuccessful.let {
-                        Log.v(TAG, "isSuccessfull{${it}}")
-                        movieListHorizontal.value = response.body()
-                    }
-                }
-
-                override fun onFailure(call: Call<MovieList>, t: Throwable) {
-                    Log.e(TAG, "Problem calling MovieDB API {${t.message}}")
-                }
+    fun loadMovieListHorizontally() = viewModelScope.launch(ioDispatcher) {
+        movieListHorizontal.postValue(Resource.Loading())
+        try {
+            if (Utils.isConnected(app)) {
+                val result = async { movieRepository.getMovieListHorizontally() }
+                Log.v(TAG, "isSuccess:: $result")
+                movieListHorizontal.postValue(result.await())
+            } else {
+                movieListHorizontal.postValue(Resource.Error("No Connectivity"))
             }
-            ApiAdapter().movieListHorizontally(callback)
-        } else {
-            Log.d(TAG, "No Connectivity")
+        } catch (e: Exception) {
+            movieListHorizontal.postValue(Resource.Error(e.message.toString()))
         }
     }
 
-    private fun loadMovieListVertically() {
-        if (Utils.isConnected(context)) {
-            val callback = object : Callback<MovieList> {
-                override fun onResponse(
-                    call: Call<MovieList>,
-                    response: Response<MovieList>
-                ) {
-                    response.isSuccessful.let {
-                        Log.v(TAG, "isSuccessfull{${it}}")
-                        movieListVertical.value = response.body()
-                    }
-                }
-
-                override fun onFailure(call: Call<MovieList>, t: Throwable) {
-                    Log.e(TAG, "Problem calling MovieDB API {${t.message}}")
-                }
+    fun loadMovieListVertically() = viewModelScope.launch(ioDispatcher) {
+        movieListVertical.postValue(Resource.Loading())
+        try {
+            if (Utils.isConnected(app)) {
+                val result = async { movieRepository.getMovieListVertically() }
+                Log.v(TAG, "isSuccess:: $result")
+                movieListVertical.postValue(result.await())
+            } else {
+                movieListVertical.postValue(Resource.Error("No Connectivity"))
             }
-            ApiAdapter().movieListVertically(callback)
-        } else {
-            Log.d(TAG, "No Connectivity")
-        }
-    }
-
-    companion object {
-        fun getViewModel(context: Context, homeViewModel: HomeViewModel):HomeViewModel {
-            return ViewModelProvider(context as ViewModelStoreOwner).get(homeViewModel::class.java)
+        } catch (e: Exception) {
+            movieListVertical.postValue(Resource.Error(e.message.toString()))
         }
     }
 }
