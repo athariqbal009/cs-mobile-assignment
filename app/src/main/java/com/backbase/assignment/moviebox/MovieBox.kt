@@ -35,7 +35,8 @@ class MovieBox : Application(), ImageLoaderFactory {
                 remoteDataModule,
                 viewModelFactoryModule,
                 viewModelModule,
-                coroutinesModule
+                coroutinesModule,
+                adapterModule
             ))
         }
     }

@@ -16,8 +16,8 @@ class MovieRepositoryImpl(
         return responseToResource(remoteDataSource.movieListHorizontally())
     }
 
-    override suspend fun getMovieListVertically(): Resource<MovieList> {
-        return responseToResource(remoteDataSource.movieListVertically())
+    override suspend fun getMovieListVertically(page: Int): Resource<MovieList> {
+        return responseToResource(remoteDataSource.movieListVertically(page))
     }
 
     override suspend fun getMovieDetails(id: Int): Resource<MovieDetails> {

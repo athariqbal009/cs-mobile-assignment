@@ -6,6 +6,8 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.backbase.assignment.moviebox.R
@@ -14,36 +16,45 @@ import com.backbase.assignment.moviebox.data.remote.ApiParams
 import com.backbase.assignment.moviebox.data.remote.response.home.Result
 import com.backbase.assignment.moviebox.utils.Utils
 import com.backbase.assignment.moviebox.utils.inflate
-import com.bumptech.glide.Glide
 
-class RVAdapterVertical(
-    private val movieList: List<Result>,
-    private val onClick: (Result) -> Unit
-) : RecyclerView.Adapter<RVAdapterVertical.MovieHolder>() {
+class RVAdapterVertical : RecyclerView.Adapter<RVAdapterVertical.MovieHolder>() {
+    private val callback = object : DiffUtil.ItemCallback<Result>() {
+        override fun areItemsTheSame(oldItem: Result, newItem: Result): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(oldItem: Result, newItem: Result): Boolean {
+            return oldItem == newItem
+        }
+
+    }
+
+    val differ = AsyncListDiffer(this, callback)
+
     init {
         setHasStableIds(true)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieHolder {
         return MovieHolder(
-            parent.inflate(R.layout.recycler_view_movie_list_vertical, false),
-            onClick
+            parent.inflate(R.layout.recycler_view_movie_list_vertical, false)
         )
     }
 
     override fun onBindViewHolder(holder: MovieHolder, position: Int) {
-        val item = movieList[position]
-        holder.setIsRecyclable(false)
-        movieList[position].let {
+        val item = differ.currentList[position]
+        item.let {
             holder.bindMovie(item)
             holder.itemView.setOnClickListener {
-                onClick(item)
+                onItemClickListener?.let {
+                    it(item)
+                }
             }
         }
     }
 
     override fun getItemCount(): Int {
-        return movieList.size
+        return differ.currentList.size
     }
 
     override fun getItemId(position: Int): Long {
@@ -54,7 +65,7 @@ class RVAdapterVertical(
         return position
     }
 
-    class MovieHolder(itemView: View, val onClick: (Result) -> Unit) :
+    class MovieHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
 
         fun bindMovie(results: Result) {
@@ -67,6 +78,7 @@ class RVAdapterVertical(
             poster.load(ApiParams.URL_POSTER + results.posterPath)
             title.text = results.title
             date.text = results.releaseDate?.let { Utils.convertDate(it) }
+
             setupProgress(results)
         }
 
@@ -95,5 +107,11 @@ class RVAdapterVertical(
             progress.progress = Utils.convertRating(results.voteAverage)
             progressText.text = Utils.convertRating(results.voteAverage).toString().plus("%")
         }
+    }
+
+    private var onItemClickListener :((Result)->Unit)?=null
+
+    fun setOnItemClickListener(listener : (Result)->Unit){
+        onItemClickListener = listener
     }
 }

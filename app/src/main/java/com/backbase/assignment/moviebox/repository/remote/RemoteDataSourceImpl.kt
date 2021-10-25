@@ -10,8 +10,8 @@ class RemoteDataSourceImpl(private val apiService: ApiService) : RemoteDataSourc
         return apiService.getMovieListHorizontally(page = "undefined")
     }
 
-    override suspend fun movieListVertically(): Response<MovieList> {
-        return apiService.getMovieListVertically(page_no = 1)
+    override suspend fun movieListVertically(page:Int): Response<MovieList> {
+        return apiService.getMovieListVertically(page_no = page)
     }
 
     override suspend fun movieDetails(id: Int): Response<MovieDetails> {

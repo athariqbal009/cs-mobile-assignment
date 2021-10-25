@@ -6,6 +6,6 @@ import retrofit2.Response
 
 interface RemoteDataSource {
     suspend fun movieListHorizontally(): Response<MovieList>
-    suspend fun movieListVertically(): Response<MovieList>
+    suspend fun movieListVertically(page:Int): Response<MovieList>
     suspend fun movieDetails(id: Int): Response<MovieDetails>
 }

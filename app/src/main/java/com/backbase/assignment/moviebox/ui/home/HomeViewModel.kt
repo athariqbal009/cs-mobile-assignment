@@ -2,9 +2,7 @@ package com.backbase.assignment.moviebox.ui.home
 
 import android.app.Application
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.backbase.assignment.moviebox.data.remote.response.home.MovieList
 import com.backbase.assignment.moviebox.domain.MovieRepository
 import com.backbase.assignment.moviebox.utils.Resource
@@ -20,46 +18,87 @@ class HomeViewModel(
     private val app: Application,
     private val movieRepository: MovieRepository,
     private val ioDispatcher: CoroutineDispatcher
-) : ViewModel() {
-    val movieListHorizontal: MutableLiveData<Resource<MovieList>> by lazy {
+) : AndroidViewModel(app), DefaultLifecycleObserver {
+    private val _movieListHorizontal: MutableLiveData<Resource<MovieList>> by lazy {
         MutableLiveData<Resource<MovieList>>().also {
             loadMovieListHorizontally()
         }
     }
 
-    val movieListVertical: MutableLiveData<Resource<MovieList>> by lazy {
-        MutableLiveData<Resource<MovieList>>().also {
-            loadMovieListVertically()
+    private val _movieListVertical: MutableLiveData<Resource<MovieList>>  = MutableLiveData<Resource<MovieList>>()
+
+    val movieListHorizontal: LiveData<Resource<MovieList>> get() = _movieListHorizontal
+    val movieListVertical: LiveData<Resource<MovieList>> get() = _movieListVertical
+
+    private fun loadMovieListHorizontally() = viewModelScope.launch {
+        emitUiStateHorizontal(clazz =  Resource.Loading())
+        try {
+            if (Utils.isConnected(app)) {
+                val result = async(ioDispatcher) { movieRepository.getMovieListHorizontally() }
+                Log.v(TAG, "isSuccess:: $result")
+                emitUiStateHorizontal(clazz = result.await())
+            } else {
+                emitUiStateHorizontal(clazz = Resource.Error("No Connectivity"))
+            }
+        } catch (e: Exception) {
+            emitUiStateHorizontal(clazz = Resource.Error(e.message.toString()))
         }
     }
 
-    fun loadMovieListHorizontally() = viewModelScope.launch(ioDispatcher) {
-        movieListHorizontal.postValue(Resource.Loading())
+    fun loadMovieListVertically(page: Int) = viewModelScope.launch {
+        emitUiStateVertical(clazz = Resource.Loading())
         try {
             if (Utils.isConnected(app)) {
-                val result = async { movieRepository.getMovieListHorizontally() }
+                val result = async(ioDispatcher) { movieRepository.getMovieListVertically(page) }
                 Log.v(TAG, "isSuccess:: $result")
-                movieListHorizontal.postValue(result.await())
+                emitUiStateVertical(clazz = result.await())
             } else {
-                movieListHorizontal.postValue(Resource.Error("No Connectivity"))
+                emitUiStateVertical(clazz = Resource.Error("No Connectivity"))
             }
         } catch (e: Exception) {
-            movieListHorizontal.postValue(Resource.Error(e.message.toString()))
+            emitUiStateVertical(clazz = Resource.Error(e.message.toString()))
         }
     }
 
-    fun loadMovieListVertically() = viewModelScope.launch(ioDispatcher) {
-        movieListVertical.postValue(Resource.Loading())
-        try {
-            if (Utils.isConnected(app)) {
-                val result = async { movieRepository.getMovieListVertically() }
-                Log.v(TAG, "isSuccess:: $result")
-                movieListVertical.postValue(result.await())
-            } else {
-                movieListVertical.postValue(Resource.Error("No Connectivity"))
-            }
-        } catch (e: Exception) {
-            movieListVertical.postValue(Resource.Error(e.message.toString()))
-        }
+    private fun emitUiStateHorizontal(
+         clazz: Resource<MovieList>
+    ) {
+        _movieListHorizontal.value = clazz
+    }
+
+    private fun emitUiStateVertical(
+        clazz: Resource<MovieList>
+    ) {
+        _movieListVertical.value = clazz
+    }
+
+    override fun onCreate(owner: LifecycleOwner) {
+        super.onCreate(owner)
+        Log.d(TAG, "onCreate() from ViewModel")
+    }
+
+    override fun onStart(owner: LifecycleOwner) {
+        super.onStart(owner)
+        Log.d(TAG, "onStart() from ViewModel")
+    }
+
+    override fun onPause(owner: LifecycleOwner) {
+        super.onPause(owner)
+        Log.d(TAG, "onPause() from ViewModel")
+    }
+
+    override fun onResume(owner: LifecycleOwner) {
+        super.onResume(owner)
+        Log.d(TAG, "onResume() from ViewModel")
+    }
+
+    override fun onStop(owner: LifecycleOwner) {
+        super.onStop(owner)
+        Log.d(TAG, "onStop() from ViewModel")
+    }
+
+    override fun onDestroy(owner: LifecycleOwner) {
+        super.onDestroy(owner)
+        Log.d(TAG, "onDestroy() from ViewModel")
     }
 }

@@ -25,13 +25,13 @@ class DetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
+        lifecycle.addObserver(viewModel)
         setContentView(binding.root)
         setupUI()
     }
 
     private fun setupUI() {
         viewModel.movieId = intent.extras?.getInt(ApiParams.MOVIE_ID)!!
-        viewModel.loadMovieDetails()
         viewModel.movieDetails.observe(this, { response ->
             when (response) {
                 is Resource.Loading -> {
